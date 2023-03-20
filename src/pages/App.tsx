@@ -2,6 +2,7 @@ import GlobalStyle, { MaxLayout } from '../components/GlobalStyle';
 import styled from 'styled-components';
 import AppBar from '../components/AppBar';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Search from './Search';
 
 const AppLayout = styled.div`
   ${MaxLayout}
@@ -14,6 +15,10 @@ function App() {
     <BrowserRouter>
       <GlobalStyle/>
       <AppLayout className='App'>
+        <Routes>
+          <Route path='/search' element={<Search/>}></Route>
+          <Route path='/' element={<Search/>}></Route>
+        </Routes>
         <AppBar/>
       </AppLayout>
     </BrowserRouter>
