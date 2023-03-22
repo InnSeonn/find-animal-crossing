@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, { css, keyframes } from 'styled-components'
 import { MaxLayout } from './GlobalStyle';
 import { FaBook, FaSearch, FaTrophy } from 'react-icons/fa';
 import { NavLink } from 'react-router-dom';
@@ -7,7 +7,7 @@ const AppBarLayout = styled.nav`
   position: fixed;
   inset: auto auto 0 0;
   width: 100%;
-  height: 80px;
+  height: 60px;
   background-color: #fff;
 `;
 const AppBarList = styled.ul`
@@ -22,6 +22,17 @@ const AppBarList = styled.ul`
     align-items: center;
   }
 `;
+export const scaleUpDown = keyframes`
+  0% {
+    transform: scale(0.8);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+`;
 const AppBarLink = styled(NavLink)`
   display: flex;
   flex-direction: column;
@@ -32,7 +43,7 @@ const AppBarLink = styled(NavLink)`
   font-size: 22px;
   &.active {
     color: var(--color-green);
-    
+    animation: ${scaleUpDown} 0.3s;
   }
 `;
 const AppBarLinkText = styled.span`

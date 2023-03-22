@@ -5,9 +5,10 @@ const Variables = css`
   :root {
     //layout size
     --max-w: 576px;
+    --app-bar-h: 60px;
 
     //spacing
-    --padding-container: 48px 20px 0;
+    --padding-container: 48px 20px var(--app-bar-h);
     --padding-x: 20px;
 
     //color
@@ -80,6 +81,7 @@ const GlobalStyle = createGlobalStyle`
     color: inherit;
     text-decoration: none;
     cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
   }
   button {
     display: block;

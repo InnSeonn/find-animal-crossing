@@ -6,8 +6,12 @@ import Search from './Search';
 
 const AppLayout = styled.div`
   ${MaxLayout}
-  min-height: 100vh;
+  overflow: hidden scroll;
+  height: calc(100vh - var(--app-bar-h));
   padding: var(--padding-container);
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 function App() {
