@@ -16,7 +16,6 @@ function App() {
       <GlobalStyle/>
       <AppLayout className='App'>
         <Routes>
-          <Route path='/search' element={<Search/>}></Route>
           <Route path='/' element={<Search/>}></Route>
         </Routes>
         <AppBar/>

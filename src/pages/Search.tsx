@@ -50,24 +50,18 @@ export default function Search() {
       <Title/>
       <SubTitle text={`나와 닮은<br>동물의 숲 주민을<br>찾아보세요!`}/>
       <SearchCardBox>
-        <SearchCard>
-          <SearchCardLink to='/search/feature'>
-            <FaRegSmileWink/>
-            <SearchCardText>나와 닮은</SearchCardText>
-          </SearchCardLink>
-        </SearchCard>
-        <SearchCard>
-          <SearchCardLink to='/search/birthday'>
-            <HiOutlineCake/>
-            <SearchCardText>생일이 같은</SearchCardText>
-          </SearchCardLink>
-        </SearchCard>
-        <SearchCard>
-          <SearchCardLink to='/search/favorite'>
-            <FaRegHeart/>
-            <SearchCardText>취향이 비슷한</SearchCardText>
-          </SearchCardLink>
-        </SearchCard>
+        <SearchCardLink to='/feature'>
+          <FaRegSmileWink/>
+          <SearchCardText>나와 닮은</SearchCardText>
+        </SearchCardLink>
+        <SearchCardLink to='/birthday'>
+          <HiOutlineCake/>
+          <SearchCardText>생일이 같은</SearchCardText>
+        </SearchCardLink>
+        <SearchCardLink to='/favorite'>
+          <FaRegHeart/>
+          <SearchCardText>취향이 비슷한</SearchCardText>
+        </SearchCardLink>
       </SearchCardBox>
     </div>
   )

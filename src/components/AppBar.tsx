@@ -50,7 +50,7 @@ export default function AppBar() {
           </AppBarLink>
         </li>
         <li>
-          <AppBarLink to='/search' className={({isActive}) => (isActive ? 'active' : '')}>
+          <AppBarLink to='/' className={({isActive}) => (isActive ? 'active' : '')}>
             <FaSearch/><AppBarLinkText>찾기</AppBarLinkText>
           </AppBarLink>
         </li>
