@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 const TitleParagraph = styled.p`
   margin-bottom: 1.4em;
@@ -8,7 +8,5 @@ const TitleParagraph = styled.p`
 `;
 
 export default function Title() {
-  return (
-    <TitleParagraph>찾아봐요, 동물의 숲</TitleParagraph>
-  )
+  return <TitleParagraph>찾아봐요, 동물의 숲</TitleParagraph>;
 }

@@ -17,12 +17,12 @@ const AppLayout = styled.div`
 function App() {
   return (
     <BrowserRouter>
-      <GlobalStyle/>
+      <GlobalStyle />
       <AppLayout className='App'>
         <Routes>
-          <Route path='/' element={<Search/>}></Route>
+          <Route path='/' element={<Search />}></Route>
         </Routes>
-        <AppBar/>
+        <AppBar />
       </AppLayout>
     </BrowserRouter>
   );

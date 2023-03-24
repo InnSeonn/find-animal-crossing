@@ -56,21 +56,24 @@ export default function AppBar() {
     <AppBarLayout>
       <AppBarList>
         <li>
-          <AppBarLink to='/book' className={({isActive}) => (isActive ? 'active' : '')}>
-            <FaBook/><AppBarLinkText>도감</AppBarLinkText>
+          <AppBarLink to='/book' className={({ isActive }) => (isActive ? 'active' : '')}>
+            <FaBook />
+            <AppBarLinkText>도감</AppBarLinkText>
           </AppBarLink>
         </li>
         <li>
-          <AppBarLink to='/' className={({isActive}) => (isActive ? 'active' : '')}>
-            <FaSearch/><AppBarLinkText>찾기</AppBarLinkText>
+          <AppBarLink to='/' className={({ isActive }) => (isActive ? 'active' : '')}>
+            <FaSearch />
+            <AppBarLinkText>찾기</AppBarLinkText>
           </AppBarLink>
         </li>
         <li>
-          <AppBarLink to='/rank' className={({isActive}) => (isActive ? 'active' : '')}>
-            <FaTrophy/><AppBarLinkText>랭킹</AppBarLinkText>
+          <AppBarLink to='/rank' className={({ isActive }) => (isActive ? 'active' : '')}>
+            <FaTrophy />
+            <AppBarLinkText>랭킹</AppBarLinkText>
           </AppBarLink>
         </li>
       </AppBarList>
     </AppBarLayout>
-  )
+  );
 }
