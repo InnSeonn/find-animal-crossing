@@ -19,21 +19,26 @@ const SearchCardLink = styled(Link)<{ checked: boolean }>`
   flex-direction: column;
   width: 100%;
   height: 100%;
-  padding: 24px 24px 20%;
+  padding: 24px;
   border-radius: 20px;
   background-color: #fff;
-  box-shadow: 4px 4px 12px 0px #cdcdcd5e;
+  box-shadow: var(--box-shadow);
   transition: opacity 0.5s;
-  ${props => props.checked && css`
-    animation: ${scaleUpDown} 0.3s;
-  `}
+  ${(props) =>
+    props.checked &&
+    css`
+      animation: ${scaleUpDown(0.95, 1.05)} 0.3s;
+    `}
+  @media screen and (max-width: 400px) {
+    padding: 6vw;
+  }
   @media screen and (any-pointer: fine) {
     opacity: 0.6;
     &:hover {
       opacity: 1;
     }
   }
-  
+
   & > svg {
     color: var(--color-green);
     font-size: var(--font-size-xl);
@@ -43,7 +48,7 @@ const SearchCardText = styled.span`
   width: 50%;
   padding-top: 0.5em;
   font-size: var(--font-size-l);
-  font-family: 'ELAND_Choice_B';
+  font-family: var(--font-b);
   line-height: 1.4;
   word-break: keep-all;
 `;

@@ -8,7 +8,7 @@ const Variables = css`
     --app-bar-h: 60px;
 
     //spacing
-    --padding-container: 48px 20px var(--app-bar-h);
+    --padding-container: 48px 20px;
     --padding-x: 20px;
 
     //color
@@ -16,20 +16,31 @@ const Variables = css`
     --color-green: #688f4e;
     --color-green-light: #b1d182;
     --color-green-dark: #2b463c;
-    --color-grey-light: #9d9a95;
+    --color-grey: #9d9a95;
+    --color-grey-light: #9d9a9540;
 
     //font size
-    --font-size-s: 14px;
-    --font-size-m: 16px;
-    --font-size-l: 24px;
-    --font-size-xl: 48px;
+    --font-size-xs: 14px;
+    --font-size-s: 16px;
+    --font-size-m: 18px;
+    --font-size-l: 20px;
+    --font-size-xl: 32px;
 
-    @media screen and (max-width: 576px) {
+    //font style
+    --font-b: 'ELAND_Choice_B';
+    --font-m: 'ELAND_Choice_M';
+    --font-l: 'ELAND_Choice_L';
+
+    //style
+    --box-shadow: rgba(205, 205, 205, 0.37) 4px 4px 12px 0px;
+
+    @media screen and (max-width: 400px) {
       :root {
-        --font-size-s: 2.431vw;
-        --font-size-m: 2.778vw;
-        --font-size-l: 4.167vw;
-        --font-size-xl: 8.333vw;
+        --font-size-xs: 3.5vw;
+        --font-size-s: 4vw;
+        --font-size-m: 4.5vw;
+        --font-size-l: 5vw;
+        --font-size-xl: 8vw;
       }
     }
   }
@@ -93,5 +104,5 @@ const GlobalStyle = createGlobalStyle`
     font-family: inherit;
     cursor: pointer;
   }
-`
+`;
 export default GlobalStyle;

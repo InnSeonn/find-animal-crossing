@@ -1,4 +1,4 @@
-import styled, { css, keyframes } from 'styled-components'
+import styled, { keyframes } from 'styled-components';
 import { MaxLayout } from './GlobalStyle';
 import { FaBook, FaSearch, FaTrophy } from 'react-icons/fa';
 import { NavLink } from 'react-router-dom';
@@ -22,12 +22,12 @@ const AppBarList = styled.ul`
     align-items: center;
   }
 `;
-export const scaleUpDown = keyframes`
+export const scaleUpDown = (min: number, max: number) => keyframes`
   0% {
-    transform: scale(0.8);
+    transform: scale(${min});
   }
   50% {
-    transform: scale(1.1);
+    transform: scale(${max});
   }
   100% {
     transform: scale(1);
@@ -43,7 +43,7 @@ const AppBarLink = styled(NavLink)`
   font-size: 22px;
   &.active {
     color: var(--color-green);
-    animation: ${scaleUpDown} 0.3s;
+    animation: ${scaleUpDown(0.8, 1.05)} 0.3s;
   }
 `;
 const AppBarLinkText = styled.span`
