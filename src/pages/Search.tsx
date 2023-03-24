@@ -7,6 +7,63 @@ import SubTitle from '../components/SubTitle';
 import { useState } from 'react';
 import { scaleUpDown } from '../components/AppBar';
 
+export default function Search() {
+  const [targetCard, setTargetCard] = useState<string>();
+
+  const clickedCard = (e: React.MouseEvent) => {
+    if (targetCard) {
+      //클릭 후 애니메이션이 종료된 경우 페이지 이동
+      return;
+    } else {
+      //클릭 후 애니메이션 설정
+      e.preventDefault();
+    }
+    if (!(e.currentTarget instanceof HTMLAnchorElement)) return;
+    setTargetCard(
+      e.currentTarget
+        .getAttribute('href')
+        ?.match(/(?<=\/)(.*?)(?=\/1)/g)
+        ?.toString()
+    );
+  };
+
+  return (
+    <div>
+      <Title />
+      <SubTitle text={`나와 닮은<br>동물의 숲 주민을<br>찾아보세요!`} />
+      <SearchCardBox>
+        <SearchCardLink
+          to='/feature/1'
+          checked={targetCard === 'feature' ? true : false}
+          onClick={clickedCard}
+          onAnimationEnd={(e) => e.currentTarget.click()}
+        >
+          <FaRegSmileWink />
+          <SearchCardText>나와 닮은</SearchCardText>
+        </SearchCardLink>
+        <SearchCardLink
+          to='/birthday/1'
+          checked={targetCard === 'birthday' ? true : false}
+          onClick={clickedCard}
+          onAnimationEnd={(e) => e.currentTarget.click()}
+        >
+          <HiOutlineCake />
+          <SearchCardText>생일이 같은</SearchCardText>
+        </SearchCardLink>
+        <SearchCardLink
+          to='/favorite/1'
+          checked={targetCard === 'favorite' ? true : false}
+          onClick={clickedCard}
+          onAnimationEnd={(e) => e.currentTarget.click()}
+        >
+          <FaRegHeart />
+          <SearchCardText>취향이 비슷한</SearchCardText>
+        </SearchCardLink>
+      </SearchCardBox>
+    </div>
+  );
+}
+
 const SearchCardBox = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -52,40 +109,3 @@ const SearchCardText = styled.span`
   line-height: 1.4;
   word-break: keep-all;
 `;
-
-export default function Search() {
-  const [targetCard, setTargetCard] = useState<string>();
-
-  const clickedCard = (e: React.MouseEvent) => {
-    if (targetCard) {
-      //클릭 후 애니메이션이 종료된 경우 페이지 이동
-      return;
-    } else {
-      //클릭 후 애니메이션 설정
-      e.preventDefault();
-    }
-    if(!(e.currentTarget instanceof HTMLAnchorElement)) return ;
-    setTargetCard(e.currentTarget.getAttribute('href')?.replace('/', ''));
-  }
-
-  return (
-    <div>
-      <Title />
-      <SubTitle text={`나와 닮은<br>동물의 숲 주민을<br>찾아보세요!`} />
-      <SearchCardBox>
-        <SearchCardLink to='/feature' checked={targetCard === 'feature' ? true : false} onClick={clickedCard} onAnimationEnd={(e) => e.currentTarget.click()}>
-          <FaRegSmileWink/>
-          <SearchCardText>나와 닮은</SearchCardText>
-        </SearchCardLink>
-        <SearchCardLink to='/birthday' checked={targetCard === 'birthday' ? true : false} onClick={clickedCard} onAnimationEnd={(e) => e.currentTarget.click()}>
-          <HiOutlineCake/>
-          <SearchCardText>생일이 같은</SearchCardText>
-        </SearchCardLink>
-        <SearchCardLink to='/favorite' checked={targetCard === 'favorite' ? true : false} onClick={clickedCard} onAnimationEnd={(e) => e.currentTarget.click()}>
-          <FaRegHeart/>
-          <SearchCardText>취향이 비슷한</SearchCardText>
-        </SearchCardLink>
-      </SearchCardBox>
-    </div>
-  )
-}
