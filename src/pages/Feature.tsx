@@ -11,11 +11,9 @@ import { RootState, set, updateNext } from '../store';
 import { personality, species } from './App';
 
 export type FeatureParamsType = {
-  state: {
-    gender: string;
-    personal: string[];
-    species: string;
-  };
+  gender: string;
+  personal: string[];
+  species: string;
 };
 
 export default function Feature() {
@@ -40,7 +38,7 @@ export default function Feature() {
 
   const setNavigateTimer = (to: string, params?: FeatureParamsType) => {
     timer.current = window.setTimeout(() => {
-      navigate(`/feature/${to}`, { replace: true, ...params });
+      navigate(`/feature/${to}`, { replace: true, state: params });
     }, 500);
   };
 
@@ -55,11 +53,9 @@ export default function Feature() {
     } else if (page === '3' && features) {
       dispatch(updateNext(progress.next + 1));
       setNavigateTimer('result', {
-        state: {
-          gender: gender,
-          personal: [...personal],
-          species: features,
-        },
+        gender: gender,
+        personal: [...personal],
+        species: features,
       });
     }
     return () => clearNavigateTimer();
