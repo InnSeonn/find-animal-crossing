@@ -18,8 +18,10 @@ const Variables = css`
     --color-green-dark: #2b463c;
     --color-grey: #9d9a95;
     --color-grey-light: #9d9a9540;
+    --color-accent: #ffa810;
 
     //font size
+    --font-size-xxs: 12px;
     --font-size-xs: 14px;
     --font-size-s: 16px;
     --font-size-m: 18px;
@@ -36,6 +38,7 @@ const Variables = css`
 
     @media screen and (max-width: 400px) {
       :root {
+        --font-size-xxs: 3vw;
         --font-size-xs: 3.5vw;
         --font-size-s: 4vw;
         --font-size-m: 4.5vw;
