@@ -1,7 +1,7 @@
 import { HiCheck } from 'react-icons/hi';
 import { useSelector } from 'react-redux';
 import styled, { css } from 'styled-components';
-import { RootState } from '../store';
+import { RootState } from '../store/store';
 
 export default function ProgressStep({ step }: { step: number }) {
   const { curr, next } = useSelector((state: RootState) => state.progress);

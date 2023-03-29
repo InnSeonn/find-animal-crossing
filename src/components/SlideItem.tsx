@@ -1,11 +1,11 @@
 import styled from 'styled-components';
-import { VillagerType } from '../hooks/useGetVillagers';
+import { VillagerType } from 'villagers';
 
 export default function SlideItem({ item }: { item: VillagerType }) {
   return (
     <>
-      <ResultImage src={item.image_url} alt='' />
-      <ResultNameParagraph>{item.name}</ResultNameParagraph>
+      <ResultImage src={item.img_url} alt='' />
+      <ResultNameParagraph>{item.name_kr}</ResultNameParagraph>
       <ResultTagBox>
         <ResultTagParagraph>{item.gender}</ResultTagParagraph>
         <ResultTagParagraph>{item.personality}</ResultTagParagraph>

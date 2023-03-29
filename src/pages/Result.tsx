@@ -3,66 +3,42 @@ import { Link, useLocation } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 import SubTitle from '../components/SubTitle';
 import Title from '../components/Title';
-import useGetVillagers, { VillagerType } from '../hooks/useGetVillagers';
-import { FeatureParamsType } from './Feature';
+import { VillagerType } from 'villagers';
 import { FaReply, FaBook } from 'react-icons/fa';
 import { HiOutlineLightBulb } from 'react-icons/hi';
 import { TbFaceIdError } from 'react-icons/tb';
-import { gender, species } from './App';
 import { SyncLoader } from 'react-spinners';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination } from 'swiper';
+import SlideItem from '../components/SlideItem';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import SlideItem from '../components/SlideItem';
+import axios from 'axios';
 
 export default function Result() {
   const location = useLocation();
-  const state = location.state as FeatureParamsType;
-  const villagers = useGetVillagers({
-    species: state.species,
-  });
   const [matchResult, setMatchResult] = useState<VillagerType[]>([]);
   const [failMessage, setFailMessage] = useState<string | undefined>();
   const [success, setSuccess] = useState(false);
 
   useEffect(() => {
-    if (villagers) {
-      if (villagers instanceof Array) {
-        const matchGender = villagers.filter((value) => value.gender === state.gender);
-        //일치하는 성별이 없을 경우
-        if (matchGender.length <= 0) {
-          setFailMessage(`${species[state.species]} 주민은 ${gender[state.gender]}가 없어요`);
-          return;
+    axios
+      .get(`http://localhost:8080/villagers/feature`, { params: location.state })
+      .then((res) => setMatchResult(res.data))
+      .catch((e) => {
+        if (axios.isAxiosError(e)) {
+          setFailMessage(e.response?.data.message);
         }
-        let matchPersonal: VillagerType[] = [];
-        //우선순위에 따라 일치하는 성격이 있으면 해당 성격의 주민만 모두 반환
-        state.personal.map((personal) => {
-          if (matchPersonal.length > 0) return;
-          matchGender.filter((value) => {
-            if (value.personality === personal) {
-              matchPersonal = [...matchPersonal, value];
-            }
-          });
-        });
-        //일치하는 성격이 없을 경우
-        if (matchPersonal.length <= 0) {
-          setFailMessage(`${species[state.species]} 주민과 일치하는 성격이 없어요`);
-          return;
-        }
-        setMatchResult(matchPersonal);
-      }
-    }
-  }, [villagers]);
+      });
+  }, []);
 
   useLayoutEffect(() => {
     //이미지 버벅임 방지를 위해 첫번째 이미지가 로드 완료되면 결과 화면 표시
-    if (matchResult) {
-      console.log(matchResult);
+    if (matchResult.length > 0) {
       matchResult.map((value, index) => {
         const img = new Image();
-        img.src = value.image_url;
+        img.src = value.img_url;
         if (index === 0) {
           img.onload = () => {
             setSuccess(true);
@@ -91,7 +67,6 @@ export default function Result() {
             {/* 성공 화면 */}
             {matchResult.length > 0 && (
               <>
-                {/* <FireworkEffect /> */}
                 <SubTitle text={'나와 닮은 주민은..'} />
                 <StyledSwiper
                   modules={[Navigation, Pagination]}

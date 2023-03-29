@@ -1,4 +1,4 @@
-import { combineReducers, configureStore, createSlice } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 
 const progressSlice = createSlice({
   name: 'progress',
@@ -8,7 +8,7 @@ const progressSlice = createSlice({
     next: 1,
   },
   reducers: {
-    set: (state, action) => {
+    setInit: (state, action) => {
       state.pages = action.payload.pages;
       state.curr = action.payload.curr;
       state.next = action.payload.next;
@@ -21,14 +21,5 @@ const progressSlice = createSlice({
     },
   },
 });
-export const { set, updateCurr, updateNext } = progressSlice.actions;
-
-const rootReducer = combineReducers({
-  progress: progressSlice.reducer,
-});
-
-const store = configureStore({
-  reducer: rootReducer,
-});
-export default store;
-export type RootState = ReturnType<typeof store.getState>;
+export const progressReducer = progressSlice.reducer;
+export const { setInit, updateCurr, updateNext } = progressSlice.actions;

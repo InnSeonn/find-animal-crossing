@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -7,19 +8,21 @@ import Progress from '../components/Progress';
 import RadioButton from '../components/RadioButton';
 import SubTitle from '../components/SubTitle';
 import Title from '../components/Title';
-import { RootState, set, updateNext } from '../store';
-import { personality, species } from './App';
+import { setPersonality, setSpecies } from '../store/featureSlice';
+import { setInit, updateNext } from '../store/progressSlice';
+import { RootState } from '../store/store';
 
 export type FeatureParamsType = {
   gender: string;
-  personal: string[];
+  personality: string[];
   species: string;
 };
 
 export default function Feature() {
   const navigate = useNavigate();
   const { page } = useParams();
-  const progress = useSelector((state: RootState) => state.progress);
+  const { feature, progress } = useSelector((state: RootState) => state);
+  const { species, personality } = feature;
   const dispatch = useDispatch();
   const timer = useRef<number | undefined>();
   const [gender, setGender] = useState('');
@@ -27,8 +30,35 @@ export default function Feature() {
   const [features, setFeatures] = useState('');
 
   useEffect(() => {
+    if (!species) {
+      (async () => {
+        return await axios
+          .get(`http://localhost:8080/villagers/species`)
+          .then((res) => dispatch(setSpecies(res.data)))
+          .catch((e) => {
+            if (axios.isAxiosError(e)) {
+              console.log(e);
+            }
+          });
+      })();
+    }
+    if (!personality) {
+      (async () => {
+        return await axios
+          .get(`http://localhost:8080/villagers/personality`)
+          .then((res) => dispatch(setPersonality(res.data)))
+          .catch((e) => {
+            if (axios.isAxiosError(e)) {
+              console.log(e);
+            }
+          });
+      })();
+    }
+  }, []);
+
+  useEffect(() => {
     dispatch(
-      set({
+      setInit({
         pages: 3,
         curr: Number(page),
         next: Number(page),
@@ -54,7 +84,7 @@ export default function Feature() {
       dispatch(updateNext(progress.next + 1));
       setNavigateTimer('result', {
         gender: gender,
-        personal: [...personal],
+        personality: [...personal],
         species: features,
       });
     }
@@ -69,22 +99,22 @@ export default function Feature() {
         <>
           <SubTitle text={'나의 성별은'} />
           <FeatureBox>
-            <RadioButton id='female' name='gender' value='Female' label='여자' select={gender} setSelect={setGender} />
-            <RadioButton id='male' name='gender' value='Male' label='남자' select={gender} setSelect={setGender} />
+            <RadioButton id='female' name='gender' value='여자' label='여자' select={gender} setSelect={setGender} />
+            <RadioButton id='male' name='gender' value='남자' label='남자' select={gender} setSelect={setGender} />
           </FeatureBox>
         </>
       )}
-      {page === '2' && (
+      {page === '2' && personality && (
         <>
           <SubTitle text={'나와 가장 어울리는<br>성격을 순서대로<br>세 가지 고른다면'} />
           <FeatureBox>
-            {Object.keys(personality).map((key, index) => (
+            {personality.map((key, index) => (
               <CheckButton
                 key={index}
-                id={key}
-                name={key}
+                id={`personality${index}`}
+                name={`personality${index}`}
                 value={key}
-                label={personality[key]}
+                label={key}
                 select={personal}
                 setSelect={setPersonal}
               />
@@ -92,17 +122,17 @@ export default function Feature() {
           </FeatureBox>
         </>
       )}
-      {page === '3' && (
+      {page === '3' && species && (
         <>
           <SubTitle text={'나와<br>가장 닮은 동물은'} />
           <FeatureBox>
-            {Object.keys(species).map((key, index) => (
+            {species.map((key, index) => (
               <RadioButton
                 key={index}
-                id={key}
+                id={`species${index}`}
                 name='species'
                 value={key}
-                label={species[key]}
+                label={key}
                 select={features}
                 setSelect={setFeatures}
               />

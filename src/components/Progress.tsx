@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { RootState } from '../store';
+import { RootState } from '../store/store';
 import ProgressStep from './ProgressStep';
 
 export default function Progress() {
