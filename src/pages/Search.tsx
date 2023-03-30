@@ -22,7 +22,7 @@ export default function Search() {
     setTargetCard(
       e.currentTarget
         .getAttribute('href')
-        ?.match(/(?<=\/)(.*?)(?=\/1)/g)
+        ?.match(/(?:\/)(.*?)(?=\/1)/g)
         ?.toString()
     );
   };
