@@ -1,14 +1,28 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { featureReducer } from './featureSlice';
 import { progressReducer } from './progressSlice';
+import { persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 
 const rootReducer = combineReducers({
   progress: progressReducer,
   feature: featureReducer,
 });
 
+const persistConfig = {
+  key: 'root',
+  storage, //localstorage
+  whitelist: ['feature'],
+};
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
 const store = configureStore({
-  reducer: rootReducer,
+  reducer: persistedReducer,
+  //redux-toolkit이 생성한 action 객체(생성자 함수 형태)를 string으로 변환하기 위해
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }),
 });
 export default store;
 export type RootState = ReturnType<typeof store.getState>;
