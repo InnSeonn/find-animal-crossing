@@ -37,6 +37,13 @@ app.get('/villagers/feature', async (req, res) => {
       if(matchResult.length > 0) return ;
       matchGender.docs.map((doc) => {
         if(doc.data().personality === value) {
+          //랭킹 추가
+          db.collection('villagers').doc(doc.id).update({
+            rank: {
+              feature: doc.data().rank.feature + 1,
+              favorite: doc.data().rank.favorite,
+            }
+          });
           return matchResult = [...matchResult, doc.data()];
         }
       })

@@ -15,27 +15,51 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../store/store';
+import { setFeature } from '../store/resultSlice';
 
 export default function Result() {
   const location = useLocation();
-  const [matchResult, setMatchResult] = useState<VillagerType[]>([]);
+  const result = useSelector((state: RootState) => state.result);
+  const dispatch = useDispatch();
+  const [matchResult, setMatchResult] = useState<VillagerType[] | undefined>(() => {
+    if (!result.feature) {
+      return undefined;
+    }
+    if (location.key === result.feature.key) {
+      return result.feature.data;
+    } else {
+      return undefined;
+    }
+  });
   const [failMessage, setFailMessage] = useState<string | undefined>();
   const [success, setSuccess] = useState(false);
 
   useEffect(() => {
-    axios
-      .get(`http://localhost:8080/villagers/feature`, { params: location.state })
-      .then((res) => setMatchResult(res.data))
-      .catch((e) => {
-        if (axios.isAxiosError(e)) {
-          setFailMessage(e.response?.data.message);
-        }
-      });
+    if (!matchResult) {
+      axios
+        .get(`http://localhost:8080/villagers/feature`, { params: location.state })
+        .then((res) => {
+          setMatchResult(res.data);
+          dispatch(
+            setFeature({
+              key: location.key,
+              data: res.data,
+            })
+          );
+        })
+        .catch((e) => {
+          if (axios.isAxiosError(e)) {
+            setFailMessage(e.response?.data.message);
+          }
+        });
+    }
   }, []);
 
   useLayoutEffect(() => {
     //이미지 버벅임 방지를 위해 첫번째 이미지가 로드 완료되면 결과 화면 표시
-    if (matchResult.length > 0) {
+    if (matchResult) {
       matchResult.map((value, index) => {
         const img = new Image();
         img.src = value.img_url;
@@ -65,7 +89,7 @@ export default function Result() {
         {(success || failMessage) && (
           <>
             {/* 성공 화면 */}
-            {matchResult.length > 0 && (
+            {matchResult && (
               <>
                 <SubTitle text={'나와 닮은 주민은..'} />
                 <StyledSwiper
