@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Search from './Search';
 import Feature from './Feature';
 import Result from './Result';
+import Ranking from './Ranking';
 
 export default function App() {
   return (
@@ -15,6 +16,7 @@ export default function App() {
           <Route path='/' element={<Search />}></Route>
           <Route path='/feature/:page' element={<Feature />}></Route>
           <Route path='/feature/result' element={<Result />}></Route>
+          <Route path='/rank' element={<Ranking />}></Route>
         </Routes>
         <AppBar />
       </AppLayout>

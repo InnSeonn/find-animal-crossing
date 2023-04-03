@@ -89,6 +89,35 @@ app.get('/villagers/personality', async (req, res) => {
   // }
 })
 
+//랭킹 가져오기
+app.get('/rank/feature', async(req, res) => {
+  //내림차순으로 10개까지 가져온 다음 같은 랭킹이 3개 초과면 그 랭킹부터 표시 X
+  try {
+    const order = await db.collection('villagers').orderBy('rank.feature', 'desc').limit(10).get();
+    const rankArray = order.docs.map(doc => (doc.data().rank.feature));
+    const first = rankArray.lastIndexOf(rankArray[0]) + 1;
+    const second = rankArray.lastIndexOf(rankArray[first]) - first + 1;
+    const last = rankArray.lastIndexOf(rankArray[first + second]) - first - second + 1;
+    
+    if(first > 3) {
+      return res.status(404).send({ message: '데이터가 부족해요' })
+    } else {
+      const firstItems = order.docs.slice(0, first).map(doc => { return { ranking: 1, ...doc.data() }});
+      const secondItems = order.docs.slice(first, second + 1).map(doc => { return { ranking: 2, ...doc.data() }});
+      const lastItems = order.docs.slice(second, last + 1).map(doc => { return { ranking: 3, ...doc.data() }});
+      if(second <= 3 && last <= 3) {
+        return res.status(200).send([...firstItems, ...secondItems, ...lastItems])
+      } else if(second <= 3) {
+        return res.status(200).send([...firstItems, ...secondItems])
+      } else {
+        return res.status(200).send(firstItems)
+      }
+    }
+  } catch(e) {
+    res.send(e);
+  }
+})
+
 app.use(express.json());
 app.listen(port, () => {
   console.log(`listening to ${port}`);

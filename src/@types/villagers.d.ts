@@ -10,7 +10,10 @@ declare module 'villagers' {
     name_kr: string;
     personality: string;
     species: string;
-    rank: number;
+    rank: {
+      feature: number;
+      favorite: number;
+    };
   };
   export type VillagerParams = {
     [key: string]: string | string[];
