@@ -76,8 +76,8 @@ const SearchCardLink = styled(Link)<{ checked: boolean }>`
   flex-direction: column;
   width: 100%;
   height: 100%;
-  padding: 24px;
-  border-radius: 20px;
+  padding: var(--font-size-xl);
+  border-radius: var(--font-size-l);
   background-color: #fff;
   box-shadow: var(--box-shadow);
   transition: opacity 0.5s;
@@ -86,9 +86,6 @@ const SearchCardLink = styled(Link)<{ checked: boolean }>`
     css`
       animation: ${scaleUpDown(0.95, 1.05)} 0.3s;
     `}
-  @media screen and (max-width: 400px) {
-    padding: 6vw;
-  }
   @media screen and (any-pointer: fine) {
     opacity: 0.6;
     &:hover {
@@ -98,7 +95,7 @@ const SearchCardLink = styled(Link)<{ checked: boolean }>`
 
   & > svg {
     color: var(--color-green);
-    font-size: var(--font-size-xl);
+    font-size: var(--font-size-xxl);
   }
 `;
 const SearchCardText = styled.span`

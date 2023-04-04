@@ -26,7 +26,8 @@ const Variables = css`
     --font-size-s: 16px;
     --font-size-m: 18px;
     --font-size-l: 20px;
-    --font-size-xl: 32px;
+    --font-size-xl: 24px;
+    --font-size-xxl: 32px;
 
     //font style
     --font-b: 'ELAND_Choice_B';
@@ -38,12 +39,15 @@ const Variables = css`
 
     @media screen and (max-width: 400px) {
       :root {
+        --padding-x: 5vw;
+
         --font-size-xxs: 3vw;
         --font-size-xs: 3.5vw;
         --font-size-s: 4vw;
         --font-size-m: 4.5vw;
         --font-size-l: 5vw;
-        --font-size-xl: 8vw;
+        --font-size-xl: 6vw;
+        --font-size-xxl: 8vw;
       }
     }
   }

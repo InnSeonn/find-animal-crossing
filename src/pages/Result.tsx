@@ -196,7 +196,7 @@ const ResultLinkBox = styled.div`
 const ResultLink = styled(Link)`
   display: inline-flex;
   align-items: center;
-  margin-top: var(--font-size-xl);
+  margin-top: var(--font-size-xxl);
   font-size: var(--font-size-xs);
   transition: opacity 0.5s;
   @media screen and (any-pointer: fine) {
@@ -259,7 +259,7 @@ const StyledSwiper = styled(Swiper)`
     color: #000;
     -webkit-tap-highlight-color: transparent;
     &::after {
-      font-size: var(--font-size-xl);
+      font-size: var(--font-size-xxl);
     }
   }
   .swiper-pagination {

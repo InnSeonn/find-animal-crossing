@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const SubTitleBox = styled.div`
-  font-size: var(--font-size-xl);
+  font-size: var(--font-size-xxl);
   line-height: 1.2;
 `;
 

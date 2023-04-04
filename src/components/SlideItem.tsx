@@ -25,7 +25,7 @@ const ResultImage = styled.img`
   }
 `;
 const ResultNameParagraph = styled.p`
-  font-size: var(--font-size-xl);
+  font-size: var(--font-size-xxl);
   font-family: var(--font-b);
   text-align: center;
 `;

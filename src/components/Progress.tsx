@@ -20,5 +20,5 @@ const ProgressBox = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  margin-bottom: var(--font-size-xl);
+  margin-bottom: var(--font-size-xxl);
 `;

@@ -69,17 +69,14 @@ const RankingTitleBox = styled.div`
   display: flex;
   .icon-flag {
     margin-left: 0.5em;
-    font-size: var(--font-size-xl);
+    font-size: var(--font-size-xxl);
   }
 `;
 const RankingListBox = styled.div`
-  padding: 24px;
+  padding: var(--font-size-xl);
   margin: calc(var(--padding-x) * 2) 0 var(--padding-x);
-  border-radius: 20px;
+  border-radius: var(--font-size-l);
   background-color: #fff;
-  @media screen and (max-width: 400px) {
-    padding: 6vw;
-  }
 
   .title {
     line-height: 1.4;
