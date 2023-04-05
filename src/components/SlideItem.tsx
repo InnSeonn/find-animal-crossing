@@ -9,7 +9,7 @@ export default function SlideItem({ item }: { item: VillagerType }) {
     : pathname.includes('birthday')
     ? [item.birthday_month + '월', item.birthday_day + '일']
     : pathname.includes('favorite')
-    ? [item.hobby, item.favorite_color, item.favorite_style]
+    ? [item.hobby, ...item.favorite_color, ...item.favorite_style]
     : undefined;
 
   return (

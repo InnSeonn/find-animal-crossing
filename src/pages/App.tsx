@@ -7,6 +7,7 @@ import Feature from './Feature';
 import Result from './Result';
 import Ranking from './Ranking';
 import Birthday from './Birthday';
+import Favorite from './Favorite';
 
 export default function App() {
   return (
@@ -19,6 +20,8 @@ export default function App() {
           <Route path='/feature/result' element={<Result />}></Route>
           <Route path='/birthday/:page' element={<Birthday />}></Route>
           <Route path='/birthday/result' element={<Result />}></Route>
+          <Route path='/favorite/:page' element={<Favorite />}></Route>
+          <Route path='/favorite/result' element={<Result />}></Route>
           <Route path='/rank' element={<Ranking />}></Route>
         </Routes>
         <AppBar />

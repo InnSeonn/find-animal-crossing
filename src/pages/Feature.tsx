@@ -98,16 +98,16 @@ export default function Feature() {
       {page === '1' && (
         <>
           <SubTitle text={'나의 성별은'} />
-          <FeatureBox>
+          <ButtonBox>
             <RadioButton id='female' name='gender' value='여자' label='여자' select={gender} setSelect={setGender} />
             <RadioButton id='male' name='gender' value='남자' label='남자' select={gender} setSelect={setGender} />
-          </FeatureBox>
+          </ButtonBox>
         </>
       )}
       {page === '2' && personality && (
         <>
           <SubTitle text={'나와 가장 어울리는<br>성격을 순서대로<br>세 가지 고른다면'} />
-          <FeatureBox>
+          <ButtonBox>
             {personality.map((key, index) => (
               <CheckButton
                 key={index}
@@ -119,13 +119,13 @@ export default function Feature() {
                 setSelect={setPersonal}
               />
             ))}
-          </FeatureBox>
+          </ButtonBox>
         </>
       )}
       {page === '3' && species && (
         <>
           <SubTitle text={'나와<br>가장 닮은 동물은'} />
-          <FeatureBox>
+          <ButtonBox>
             {species.map((key, index) => (
               <RadioButton
                 key={index}
@@ -137,14 +137,14 @@ export default function Feature() {
                 setSelect={setFeatures}
               />
             ))}
-          </FeatureBox>
+          </ButtonBox>
         </>
       )}
     </div>
   );
 }
 
-const FeatureBox = styled.div`
+export const ButtonBox = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-gap: var(--padding-x);

@@ -105,7 +105,7 @@ export default function Result() {
                       : search === 'birthday'
                       ? '나와 생일이 같은<br>주민은..'
                       : search === 'favorite'
-                      ? '나와 취향이 비슷한 주민은..'
+                      ? '나와 취향이 비슷한<br>주민은..'
                       : ''
                   }
                 />

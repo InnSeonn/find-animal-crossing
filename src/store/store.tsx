@@ -4,17 +4,19 @@ import { progressReducer } from './progressSlice';
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import { resultReducer } from './resultSlice';
+import { favoriteReducer } from './favoriteSlice';
 
 const rootReducer = combineReducers({
   progress: progressReducer,
   feature: featureReducer,
+  favorite: favoriteReducer,
   result: resultReducer,
 });
 
 const persistConfig = {
   key: 'root',
   storage, //localstorage
-  whitelist: ['feature', 'result'],
+  whitelist: ['feature', 'favorite', 'result'],
 };
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
