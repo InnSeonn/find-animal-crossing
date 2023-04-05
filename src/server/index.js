@@ -118,13 +118,13 @@ app.get('/rank/feature', async(req, res) => {
     const first = rankArray.lastIndexOf(rankArray[0]) + 1;
     const second = rankArray.lastIndexOf(rankArray[first]) - first + 1;
     const last = rankArray.lastIndexOf(rankArray[first + second]) - first - second + 1;
-    
+
     if(first > 3) {
       return res.status(404).send({ message: '데이터가 부족해요' })
     } else {
       const firstItems = order.docs.slice(0, first).map(doc => { return { ranking: 1, ...doc.data() }});
-      const secondItems = order.docs.slice(first, second + 1).map(doc => { return { ranking: 2, ...doc.data() }});
-      const lastItems = order.docs.slice(second, last + 1).map(doc => { return { ranking: 3, ...doc.data() }});
+      const secondItems = order.docs.slice(first, second + first).map(doc => { return { ranking: 2, ...doc.data() }});
+      const lastItems = order.docs.slice(second + first, last + second + first).map(doc => { return { ranking: 3, ...doc.data() }});
       if(second <= 3 && last <= 3) {
         return res.status(200).send([...firstItems, ...secondItems, ...lastItems])
       } else if(second <= 3) {
