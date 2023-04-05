@@ -1,15 +1,23 @@
+import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { VillagerType } from 'villagers';
 
 export default function SlideItem({ item }: { item: VillagerType }) {
+  const pathname = useLocation().pathname;
+  const tags = pathname.includes('feature')
+    ? [item.gender, item.personality, item.species]
+    : pathname.includes('birthday')
+    ? [item.birthday_month + '월', item.birthday_day + '일']
+    : pathname.includes('favorite')
+    ? [item.hobby, item.favorite_color, item.favorite_style]
+    : undefined;
+
   return (
     <>
       <ResultImage src={item.img_url} alt='' />
       <ResultNameParagraph>{item.name_kr}</ResultNameParagraph>
       <ResultTagBox>
-        <ResultTagParagraph>{item.gender}</ResultTagParagraph>
-        <ResultTagParagraph>{item.personality}</ResultTagParagraph>
-        <ResultTagParagraph>{item.species}</ResultTagParagraph>
+        {tags && tags.map((tag, index) => <ResultTagParagraph key={index}>{tag}</ResultTagParagraph>)}
       </ResultTagBox>
     </>
   );
