@@ -59,6 +59,26 @@ app.get('/villagers/feature', async (req, res) => {
   }
 });
 
+//생일이 같은 주민 가져오기
+app.get('/villagers/birthday', async(req, res) => {
+  const { month, day } = req.query;
+  
+  try {
+    const match = await db.collection('villagers')
+    .where('birthday_month', '==', `${month}`)
+    .where('birthday_day', '==', `${day}`)
+    .get();
+
+    if(match.size <= 0) {
+      return res.status(404).send({message: '생일이 일치하는 주민이 없어요'})
+    } else {
+      return res.status(200).send(match.docs.map(doc => doc.data()));
+    }
+  } catch (e) {
+    res.send(e);
+  }
+})
+
 //주민 종류 가져오기
 app.get('/villagers/species', async (req, res) => {
   res.send(['새', '다람쥐', '돼지', '고릴라', '악어', '코알라', '독수리', '개미핥기', '소', '쥐', '고양이', '말', '햄스터', '캥거루', '늑대', '펭귄', '닭', '코끼리', '코뿔소', '양', '사슴', '호랑이', '꼬마곰', '개', '곰', '하마', '오리', '염소', '타조', '토끼', '사자', '개구리', '문어', '원숭이'])
