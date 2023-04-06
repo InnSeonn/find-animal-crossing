@@ -53,6 +53,7 @@ export default function Feature() {
   }, [page]);
 
   useEffect(() => {
+    clearNavigateTimer();
     dispatch(
       setInit({
         pages: 3,
@@ -70,6 +71,7 @@ export default function Feature() {
 
   const clearNavigateTimer = () => {
     clearTimeout(timer.current);
+    timer.current = undefined;
   };
 
   useEffect(() => {
@@ -84,8 +86,13 @@ export default function Feature() {
         species: features,
       });
     }
-    return () => clearNavigateTimer();
   }, [gender, personal, features]);
+
+  const preventHandle = (e: React.MouseEvent) => {
+    if (timer.current) {
+      e.preventDefault();
+    }
+  };
 
   return (
     <div>
@@ -94,7 +101,7 @@ export default function Feature() {
       {page === '1' && (
         <>
           <SubTitle text={'나의 성별은'} />
-          <ButtonBox>
+          <ButtonBox onClick={preventHandle}>
             <RadioButton id='female' name='gender' value='여자' label='여자' select={gender} setSelect={setGender} />
             <RadioButton id='male' name='gender' value='남자' label='남자' select={gender} setSelect={setGender} />
           </ButtonBox>
@@ -103,7 +110,7 @@ export default function Feature() {
       {page === '2' && personality && (
         <>
           <SubTitle text={'나와 가장 어울리는<br>성격을 순서대로<br>세 가지 고른다면'} />
-          <ButtonBox>
+          <ButtonBox onClick={preventHandle}>
             {personality.map((key, index) => (
               <CheckButton
                 key={index}
@@ -121,7 +128,7 @@ export default function Feature() {
       {page === '3' && species && (
         <>
           <SubTitle text={'나와<br>가장 닮은 동물은'} />
-          <ButtonBox>
+          <ButtonBox onClick={preventHandle}>
             {species.map((key, index) => (
               <RadioButton
                 key={index}

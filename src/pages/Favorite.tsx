@@ -58,6 +58,7 @@ export default function Favorite() {
   }, [page]);
 
   useEffect(() => {
+    clearNavigateTimer();
     dispatch(
       setInit({
         pages: 3,
@@ -75,6 +76,7 @@ export default function Favorite() {
 
   const clearNavigateTimer = () => {
     clearTimeout(timer.current);
+    timer.current = undefined;
   };
 
   useEffect(() => {
@@ -89,8 +91,13 @@ export default function Favorite() {
         style: [...myStyle],
       });
     }
-    return () => clearNavigateTimer();
   }, [myHobby, myColor, myStyle]);
+
+  const preventHandle = (e: React.MouseEvent) => {
+    if (timer.current) {
+      e.preventDefault();
+    }
+  };
 
   return (
     <>
@@ -99,7 +106,7 @@ export default function Favorite() {
       {page === '1' && hobby && (
         <>
           <SubTitle text='내가 가장 좋아하는<br>취미 활동은' />
-          <ButtonBox>
+          <ButtonBox onClick={preventHandle}>
             {hobby.map((value, index) => (
               <RadioButton
                 key={index}
@@ -117,7 +124,7 @@ export default function Favorite() {
       {page === '2' && color && (
         <>
           <SubTitle text='내가 좋아하는 색상을<br>두 가지 고른다면' />
-          <ButtonBox>
+          <ButtonBox onClick={preventHandle}>
             {color.map((value, index) => (
               <CheckButton
                 key={index}
@@ -135,7 +142,7 @@ export default function Favorite() {
       {page === '3' && style && (
         <>
           <SubTitle text='내가 좋아하는 스타일을<br>두 가지 고른다면' />
-          <ButtonBox>
+          <ButtonBox onClick={preventHandle}>
             {style.map((value, index) => (
               <CheckButton
                 key={index}
