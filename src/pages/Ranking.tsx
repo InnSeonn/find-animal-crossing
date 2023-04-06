@@ -19,7 +19,7 @@ export default function Ranking() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/rank/feature`)
+      .get(`${process.env.REACT_APP_SERVER_URL}/api/rank/feature`)
       .then((res) => setFeatureRank(res.data))
       .catch((e) => {
         if (axios.isAxiosError(e)) {
@@ -27,7 +27,7 @@ export default function Ranking() {
         }
       });
     axios
-      .get(`http://localhost:8080/rank/favorite`)
+      .get(`${process.env.REACT_APP_SERVER_URL}/api/rank/favorite`)
       .then((res) => setFavoriteRank(res.data))
       .catch((e) => {
         if (axios.isAxiosError(e)) {

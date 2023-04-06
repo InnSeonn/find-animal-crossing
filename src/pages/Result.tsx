@@ -54,7 +54,7 @@ export default function Result() {
     if (!setFunc) return;
     if (!matchResult) {
       axios
-        .get(`http://localhost:8080/villagers/${search}`, { params: location.state })
+        .get(`${process.env.REACT_APP_SERVER_URL}/api/villagers/${search}`, { params: location.state })
         .then((res) => {
           setMatchResult(res.data);
           dispatch(

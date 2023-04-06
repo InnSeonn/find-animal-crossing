@@ -32,7 +32,7 @@ export default function Favorite() {
 
   const getData = async (name: string, action: ActionCreatorWithPayload<any>) => {
     return await axios
-      .get(`http://localhost:8080/villagers/${name}`)
+      .get(`${process.env.REACT_APP_SERVER_URL}/api/villagers/${name}`)
       .then((res) => dispatch(action(res.data)))
       .catch((e) => {
         if (isAxiosError(e)) {

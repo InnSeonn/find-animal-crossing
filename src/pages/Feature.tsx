@@ -32,7 +32,7 @@ export default function Feature() {
   useEffect(() => {
     if (page === '2' && !personality) {
       axios
-        .get(`http://localhost:8080/villagers/personality`)
+        .get(`${process.env.REACT_APP_SERVER_URL}/api/villagers/personality`)
         .then((res) => dispatch(setPersonality(res.data)))
         .catch((e) => {
           if (axios.isAxiosError(e)) {
@@ -42,7 +42,7 @@ export default function Feature() {
     }
     if (page === '3' && !species) {
       axios
-        .get(`http://localhost:8080/villagers/species`)
+        .get(`${process.env.REACT_APP_SERVER_URL}/api/villagers/species`)
         .then((res) => dispatch(setSpecies(res.data)))
         .catch((e) => {
           if (axios.isAxiosError(e)) {
