@@ -189,57 +189,58 @@ app.get('/villagers/style', async (req, res) => {
   res.send(['액티브', '쿨', '큐트', '엘레강스', '고저스', '심플']);
 })
 
-//랭킹 가져오기
+//1~3위 랭킹 구분
+const getRanking = (order, rankArray) => {
+  const first = rankArray.lastIndexOf(rankArray[0]) + 1;
+  const second = rankArray.lastIndexOf(rankArray[first]) - first + 1;
+  const last = rankArray.lastIndexOf(rankArray[first + second]) - first - second + 1;
+
+  if(first > 3) {
+    return '데이터가 부족해요';
+  } else {
+    const firstItems = order.docs.slice(0, first).map(doc => { return { ranking: 1, ...doc.data() }});
+    const secondItems = order.docs.slice(first, second + first).map(doc => { return { ranking: 2, ...doc.data() }});
+    const lastItems = order.docs.slice(second + first, last + second + first).map(doc => { return { ranking: 3, ...doc.data() }});
+    if(second <= 3 && last <= 3) {
+      return [...firstItems, ...secondItems, ...lastItems];
+    } else if(second <= 3) {
+      return [...firstItems, ...secondItems];
+    } else {
+      return firstItems;
+    }
+  }
+}
+
+//많이 닮은 주민 랭킹 가져오기
 app.get('/rank/feature', async(req, res) => {
   //내림차순으로 10개까지 가져온 다음 같은 랭킹이 3개 초과면 그 랭킹부터 표시 X
   try {
     const order = await db.collection('villagers').orderBy('rank.feature', 'desc').limit(10).get();
     const rankArray = order.docs.map(doc => (doc.data().rank.feature));
-    const first = rankArray.lastIndexOf(rankArray[0]) + 1;
-    const second = rankArray.lastIndexOf(rankArray[first]) - first + 1;
-    const last = rankArray.lastIndexOf(rankArray[first + second]) - first - second + 1;
+    const result = getRanking(order, rankArray);
 
-    if(first > 3) {
-      return res.status(404).send({ message: '데이터가 부족해요' })
+    if(typeof result === 'string') {
+      return res.status(404).send({ message: `${result}` })
     } else {
-      const firstItems = order.docs.slice(0, first).map(doc => { return { ranking: 1, ...doc.data() }});
-      const secondItems = order.docs.slice(first, second + first).map(doc => { return { ranking: 2, ...doc.data() }});
-      const lastItems = order.docs.slice(second + first, last + second + first).map(doc => { return { ranking: 3, ...doc.data() }});
-      if(second <= 3 && last <= 3) {
-        return res.status(200).send([...firstItems, ...secondItems, ...lastItems])
-      } else if(second <= 3) {
-        return res.status(200).send([...firstItems, ...secondItems])
-      } else {
-        return res.status(200).send(firstItems)
-      }
+      return res.status(200).send(result);
     }
   } catch(e) {
     res.send(e);
   }
 })
-//랭킹 가져오기
+
+//취향이 비슷한 주민 랭킹 가져오기
 app.get('/rank/favorite', async(req, res) => {
   //내림차순으로 10개까지 가져온 다음 같은 랭킹이 3개 초과면 그 랭킹부터 표시 X
   try {
     const order = await db.collection('villagers').orderBy('rank.favorite', 'desc').limit(10).get();
     const rankArray = order.docs.map(doc => (doc.data().rank.favorite));
-    const first = rankArray.lastIndexOf(rankArray[0]) + 1;
-    const second = rankArray.lastIndexOf(rankArray[first]) - first + 1;
-    const last = rankArray.lastIndexOf(rankArray[first + second]) - first - second + 1;
+    const result = getRanking(order, rankArray);
 
-    if(first > 3) {
-      return res.status(404).send({ message: '데이터가 부족해요' })
+    if(typeof result === 'string') {
+      return res.status(404).send({ message: `${result}` })
     } else {
-      const firstItems = order.docs.slice(0, first).map(doc => { return { ranking: 1, ...doc.data() }});
-      const secondItems = order.docs.slice(first, second + first).map(doc => { return { ranking: 2, ...doc.data() }});
-      const lastItems = order.docs.slice(second + first, last + second + first).map(doc => { return { ranking: 3, ...doc.data() }});
-      if(second <= 3 && last <= 3) {
-        return res.status(200).send([...firstItems, ...secondItems, ...lastItems])
-      } else if(second <= 3) {
-        return res.status(200).send([...firstItems, ...secondItems])
-      } else {
-        return res.status(200).send(firstItems)
-      }
+      return res.status(200).send(result);
     }
   } catch(e) {
     res.send(e);

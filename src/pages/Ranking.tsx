@@ -18,24 +18,22 @@ export default function Ranking() {
   const [favoriteRank, setFavoriteRank] = useState<VillagerRankType[] | undefined>(undefined);
 
   useEffect(() => {
-    (async () => {
-      try {
-        return await axios.get(`http://localhost:8080/rank/feature`).then((res) => setFeatureRank(res.data));
-      } catch (e) {
+    axios
+      .get(`http://localhost:8080/rank/feature`)
+      .then((res) => setFeatureRank(res.data))
+      .catch((e) => {
         if (axios.isAxiosError(e)) {
           setFeatureFailMessage(e.response?.data.message);
         }
-      }
-    })();
-    (async () => {
-      try {
-        return await axios.get(`http://localhost:8080/rank/favorite`).then((res) => setFavoriteRank(res.data));
-      } catch (e) {
+      });
+    axios
+      .get(`http://localhost:8080/rank/favorite`)
+      .then((res) => setFavoriteRank(res.data))
+      .catch((e) => {
         if (axios.isAxiosError(e)) {
           setFavoriteFailMessage(e.response?.data.message);
         }
-      }
-    })();
+      });
   }, []);
 
   return (

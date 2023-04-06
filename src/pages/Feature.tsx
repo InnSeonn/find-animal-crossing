@@ -30,31 +30,27 @@ export default function Feature() {
   const [features, setFeatures] = useState('');
 
   useEffect(() => {
-    if (!species) {
-      (async () => {
-        return await axios
-          .get(`http://localhost:8080/villagers/species`)
-          .then((res) => dispatch(setSpecies(res.data)))
-          .catch((e) => {
-            if (axios.isAxiosError(e)) {
-              console.log(e);
-            }
-          });
-      })();
+    if (page === '2' && !personality) {
+      axios
+        .get(`http://localhost:8080/villagers/personality`)
+        .then((res) => dispatch(setPersonality(res.data)))
+        .catch((e) => {
+          if (axios.isAxiosError(e)) {
+            console.log(e);
+          }
+        });
     }
-    if (!personality) {
-      (async () => {
-        return await axios
-          .get(`http://localhost:8080/villagers/personality`)
-          .then((res) => dispatch(setPersonality(res.data)))
-          .catch((e) => {
-            if (axios.isAxiosError(e)) {
-              console.log(e);
-            }
-          });
-      })();
+    if (page === '3' && !species) {
+      axios
+        .get(`http://localhost:8080/villagers/species`)
+        .then((res) => dispatch(setSpecies(res.data)))
+        .catch((e) => {
+          if (axios.isAxiosError(e)) {
+            console.log(e);
+          }
+        });
     }
-  }, []);
+  }, [page]);
 
   useEffect(() => {
     dispatch(
