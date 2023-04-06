@@ -12,8 +12,10 @@ export type VillagerRankType = VillagerType & {
 };
 
 export default function Ranking() {
-  const [failMessage, setFailMessage] = useState<string | undefined>();
+  const [featureFailMsg, setFeatureFailMessage] = useState('');
+  const [favoriteFailMsg, setFavoriteFailMessage] = useState('');
   const [featureRank, setFeatureRank] = useState<VillagerRankType[] | undefined>(undefined);
+  const [favoriteRank, setFavoriteRank] = useState<VillagerRankType[] | undefined>(undefined);
 
   useEffect(() => {
     (async () => {
@@ -21,7 +23,16 @@ export default function Ranking() {
         return await axios.get(`http://localhost:8080/rank/feature`).then((res) => setFeatureRank(res.data));
       } catch (e) {
         if (axios.isAxiosError(e)) {
-          setFailMessage(e.response?.data.message);
+          setFeatureFailMessage(e.response?.data.message);
+        }
+      }
+    })();
+    (async () => {
+      try {
+        return await axios.get(`http://localhost:8080/rank/favorite`).then((res) => setFavoriteRank(res.data));
+      } catch (e) {
+        if (axios.isAxiosError(e)) {
+          setFavoriteFailMessage(e.response?.data.message);
         }
       }
     })();
@@ -39,13 +50,13 @@ export default function Ranking() {
           <br />
           <span className='accent'>가장 많이 닮은</span> 주민은
         </p>
-        {!failMessage && (
+        {!featureFailMsg && (
           <RankingList>
             {featureRank &&
               featureRank.map((value, index) => <RankingItem key={index} item={value} category='feature' />)}
           </RankingList>
         )}
-        {failMessage && (
+        {featureFailMsg && (
           <RankingFailMessageBox>
             <MdErrorOutline className='icon-error' />
             <p>아직 데이터가 부족해요.</p>
@@ -59,7 +70,19 @@ export default function Ranking() {
           <br />
           <span className='accent'>가장 취향이 비슷한</span> 주민은
         </p>
-        <ol>{}</ol>
+        {!favoriteFailMsg && (
+          <RankingList>
+            {favoriteRank &&
+              favoriteRank.map((value, index) => <RankingItem key={index} item={value} category='favorite' />)}
+          </RankingList>
+        )}
+        {favoriteFailMsg && (
+          <RankingFailMessageBox>
+            <MdErrorOutline className='icon-error' />
+            <p>아직 데이터가 부족해요.</p>
+            <p>찾기 탭에서 취향이 비슷한 주민을 찾아보세요!</p>
+          </RankingFailMessageBox>
+        )}
       </RankingListBox>
     </div>
   );
