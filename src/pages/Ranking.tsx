@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { VillagerType } from 'villagers';
 import RankingItem from '../components/RankingItem';
+import { SyncLoader } from 'react-spinners';
 
 export type VillagerRankType = VillagerType & {
   ranking: number;
@@ -16,6 +17,8 @@ export default function Ranking() {
   const [favoriteFailMsg, setFavoriteFailMessage] = useState('');
   const [featureRank, setFeatureRank] = useState<VillagerRankType[] | undefined>(undefined);
   const [favoriteRank, setFavoriteRank] = useState<VillagerRankType[] | undefined>(undefined);
+  const featureIsLoading = !(featureRank || featureFailMsg);
+  const favoriteIsLoading = !(favoriteRank || favoriteFailMsg);
 
   useEffect(() => {
     axios
@@ -48,6 +51,11 @@ export default function Ranking() {
           <br />
           <span className='accent'>가장 많이 닮은</span> 주민은
         </p>
+        {featureIsLoading && (
+          <LoaderBox>
+            <SyncLoader size='1em' margin='0.5em' speedMultiplier={1.2} color='#9d9a95' />
+          </LoaderBox>
+        )}
         {!featureFailMsg && (
           <RankingList>
             {featureRank &&
@@ -68,6 +76,11 @@ export default function Ranking() {
           <br />
           <span className='accent'>가장 취향이 비슷한</span> 주민은
         </p>
+        {favoriteIsLoading && (
+          <LoaderBox>
+            <SyncLoader size='1em' margin='0.5em' speedMultiplier={1.2} color='#9d9a95' />
+          </LoaderBox>
+        )}
         {!favoriteFailMsg && (
           <RankingList>
             {favoriteRank &&
@@ -121,4 +134,9 @@ const RankingFailMessageBox = styled.div`
     margin-bottom: 0.4em;
     font-size: var(--font-size-l);
   }
+`;
+const LoaderBox = styled.div`
+  padding: calc(var(--padding-x) * 2) 0;
+  font-size: var(--font-size-s);
+  text-align: center;
 `;
