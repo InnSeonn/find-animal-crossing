@@ -95,7 +95,7 @@ const RankingTitleBox = styled.div`
 `;
 const RankingListBox = styled.div`
   padding: var(--font-size-xl);
-  margin: calc(var(--padding-x) * 2) 0 var(--padding-x);
+  margin-top: calc(var(--padding-x) * 2);
   border-radius: var(--font-size-l);
   background-color: #fff;
 

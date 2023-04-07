@@ -33,7 +33,7 @@ export default function App() {
 const AppLayout = styled.div`
   ${MaxLayout}
   overflow: hidden scroll;
-  height: calc(100vh - var(--app-bar-h));
+  height: 100%;
   padding: var(--padding-container);
   ::-webkit-scrollbar {
     display: none;

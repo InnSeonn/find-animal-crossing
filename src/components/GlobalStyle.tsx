@@ -8,7 +8,7 @@ const Variables = css`
     --app-bar-h: 60px;
 
     //spacing
-    --padding-container: 48px 20px;
+    --padding-container: 48px 20px calc(var(--app-bar-h) + 48px);
     --padding-x: 20px;
 
     //color
@@ -90,8 +90,7 @@ const GlobalStyle = createGlobalStyle`
     letter-spacing: -0.03em;
   }
   html, body {
-    overflow: hidden;
-    height: 100vh;
+    height: 100%;
     background-color: var(--color-light);
     font-family: 'ELAND_Choice_M';
   }
