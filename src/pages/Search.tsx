@@ -34,7 +34,7 @@ export default function Search() {
       <SearchCardBox>
         <SearchCardLink
           to='/feature/1'
-          checked={targetCard === 'feature' ? true : false}
+          checked={targetCard === '/feature' ? true : false}
           onClick={clickedCard}
           onAnimationEnd={(e) => e.currentTarget.click()}
         >
@@ -43,7 +43,7 @@ export default function Search() {
         </SearchCardLink>
         <SearchCardLink
           to='/birthday/1'
-          checked={targetCard === 'birthday' ? true : false}
+          checked={targetCard === '/birthday' ? true : false}
           onClick={clickedCard}
           onAnimationEnd={(e) => e.currentTarget.click()}
         >
@@ -52,7 +52,7 @@ export default function Search() {
         </SearchCardLink>
         <SearchCardLink
           to='/favorite/1'
-          checked={targetCard === 'favorite' ? true : false}
+          checked={targetCard === '/favorite' ? true : false}
           onClick={clickedCard}
           onAnimationEnd={(e) => e.currentTarget.click()}
         >
