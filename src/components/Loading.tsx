@@ -5,7 +5,7 @@ export default function Loading() {
   return (
     <LoadingBox>
       <LoaderBox>
-        <SyncLoader size='18px' margin='5px' speedMultiplier={1.2} color='#9d9a95' />
+        <SyncLoader size='1em' margin='0.4em' speedMultiplier={1.2} color='#9d9a95' />
       </LoaderBox>
       <p className='loading-text'>일치하는 주민을 찾고 있어요</p>
       <p className='loading-wait'>잠시만 기다려 주세요</p>
@@ -48,4 +48,5 @@ const LoaderBox = styled.div`
   ${squareSize}
   border-radius: 50%;
   background-color: rgba(255, 255, 255, 0.5);
+  font-size: var(--font-size-m);
 `;
